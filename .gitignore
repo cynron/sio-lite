@@ -1,3 +1,4 @@
+.gitignore
 .DS_Store
 lib-cov
 *.seed
@@ -8,3 +9,4 @@ lib-cov
 *.pid
 benchmarks/*.png
 node_modules
+test/test.js
