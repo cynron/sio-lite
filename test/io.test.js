@@ -23,7 +23,7 @@ var sio = require('../')
 module.exports = {
 
   'test that protocol version is present': function (done) {
-    sio.protocol.should.be.a('number');
+    sio.protocol.should.be.a.Number;
     done();
   },
 

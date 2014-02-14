@@ -148,25 +148,6 @@ module.exports = {
     });
   },
 
-  'test that you can disable clients': function (done) {
-    var port = ++ports
-      , io = sio.listen(port)
-      , cl = client(port);
-
-    io.configure(function () {
-      io.disable('browser client');
-    });
-
-    cl.get('/socket.io/socket.io.js', function (res, data) {
-      res.statusCode.should.eql(200);
-      data.should.eql('Welcome to socket.io.');
-
-      cl.end();
-      io.server.close();
-      done();
-    });
-  },
-
   'test handshake': function (done) {
     var port = ++ports
       , io = sio.listen(port)
@@ -485,46 +466,6 @@ module.exports = {
           }
         });
       });
-    });
-  },
-
-  'no duplicate room members': function (done) {
-    var port = ++ports
-      , io = sio.listen(port);
-
-    Object.keys(io.rooms).length.should.equal(0);
-
-    io.onJoin(123, 'foo');
-    io.rooms.foo.length.should.equal(1);
-
-    io.onJoin(123, 'foo');
-    io.rooms.foo.length.should.equal(1);
-
-    io.onJoin(124, 'foo');
-    io.rooms.foo.length.should.equal(2);
-
-    io.onJoin(124, 'foo');
-    io.rooms.foo.length.should.equal(2);
-
-    io.onJoin(123, 'bar');
-    io.rooms.foo.length.should.equal(2);
-    io.rooms.bar.length.should.equal(1);
-
-    io.onJoin(123, 'bar');
-    io.rooms.foo.length.should.equal(2);
-    io.rooms.bar.length.should.equal(1);
-
-    io.onJoin(124, 'bar');
-    io.rooms.foo.length.should.equal(2);
-    io.rooms.bar.length.should.equal(2);
-
-    io.onJoin(124, 'bar');
-    io.rooms.foo.length.should.equal(2);
-    io.rooms.bar.length.should.equal(2);
-
-    process.nextTick(function() {
-      io.server.close();
-      done();
     });
   },
 
