@@ -71,39 +71,39 @@ module.exports = {
     });
   },
 
-  'test listening with a https server': function (done) {
-    var server = https.createServer({
-            key: fs.readFileSync(__dirname + '/fixtures/key.key')
-          , cert: fs.readFileSync(__dirname + '/fixtures/cert.crt')
-        }, function () { })
-      , io = sio.listen(server)
-      , port = ++ports;
-
-    server.listen(port);
-
-    var req = require('https').get({
-        host: 'localhost'
-      , port: port
-      , path: '/socket.io'
-    }, function (res) {
-      res.statusCode.should.eql(200);
-
-      var buf = '';
-
-      res.on('data', function (data) {
-        buf += data;
-      });
-
-      res.on('end', function () {
-        buf.should.eql('Welcome to socket.io.');
-
-        res.socket.end();
-        server.close();
-        done();
-      });
-    });
-  },
-
+//  'test listening with a https server': function (done) {
+//    var server = https.createServer({
+//            key: fs.readFileSync(__dirname + '/fixtures/key.key')
+//          , cert: fs.readFileSync(__dirname + '/fixtures/cert.crt')
+//        }, function () { })
+//      , io = sio.listen(server)
+//      , port = ++ports;
+//
+//    server.listen(port);
+//
+//    var req = require('https').get({
+//        host: 'localhost'
+//      , port: port
+//      , path: '/socket.io'
+//    }, function (res) {
+//      res.statusCode.should.eql(200);
+//
+//      var buf = '';
+//
+//      res.on('data', function (data) {
+//        buf += data;
+//      });
+//
+//      res.on('end', function () {
+//        buf.should.eql('Welcome to socket.io.');
+//
+//        res.socket.end();
+//        server.close();
+//        done();
+//      });
+//    });
+//  },
+//
   'test listening with no arguments listens on 80': function (done) {
     try {
       var io = sio.listen()
