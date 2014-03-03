@@ -16,7 +16,8 @@
       , "url": "https://github.com/LearnBoost/socket.io.git"
     }
   , "dependencies": {
-        "base64id": "0.1.0"
+        "socket.io-client": "0.9.16"
+      , "base64id": "0.1.0"
       , "redis": "0.10.0"
     }
   , "devDependencies": {
