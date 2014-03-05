@@ -10,10 +10,13 @@
  */
 
 var sio = require('../')
-  , should = require('./common')
-  , HTTPClient = should.HTTPClient
+  , should = require('should')
+  , HTTPClient = require('./common').HTTPClient
   , parser = sio.parser
-  , ports = 15200;
+  , util = require('util')
+  , create = require('./common').create 
+  , websocket = require('./common').websocket
+  , ports = 15300;
 
 /**
  * HTTPClient for xhr-polling transport.
@@ -27,7 +30,7 @@ function XHRPolling (port) {
  * Inhertis from HTTPClient.
  */
 
-XHRPolling.prototype.__proto__ = HTTPClient.prototype;
+util.inherits(XHRPolling, HTTPClient);
 
 /**
  * Performs the handshake and expects the connect echo packet.

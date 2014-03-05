@@ -14,6 +14,9 @@ var sio = require('../')
   , http = require('http')
   , https = require('https')
   , should = require('./common')
+  , client = require('./common').client
+  , create = require('./common').create 
+  , websocket = require('./common').websocket
   , ports = 15000;
 
 /**

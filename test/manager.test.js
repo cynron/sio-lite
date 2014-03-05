@@ -10,7 +10,10 @@
 
 var sio = require('../')
   , http = require('http')
-  , should = require('./common')
+  , should = require('should')
+  , client = require('./common').client
+  , create = require('./common').create 
+  , websocket = require('./common').websocket
   , ports = 15100;
 
 /**
@@ -145,6 +148,25 @@ module.exports = {
         server.close();
         done();
       });
+    });
+  },
+
+  'test that you can disable clients': function (done) {
+    var port = ++ports
+      , io = sio.listen(port)
+      , cl = client(port);
+
+    io.configure(function () {
+      io.disable('browser client');
+    });
+
+    cl.get('/socket.io/socket.io.js', function (res, data) {
+      res.statusCode.should.eql(200);
+      data.should.eql('Welcome to socket.io.');
+
+      cl.end();
+      io.server.close();
+      done();
     });
   },
 

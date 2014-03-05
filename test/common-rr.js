@@ -13,6 +13,7 @@ var io = require('../')
   , parser = io.parser
   , http = require('http')
   , https = require('https')
+  , RedisStore = require('../lib/stores/redis')
   , util = require('util')
   , WebSocket = require('../support/node-websocket-client/lib/websocket').WebSocket;
 
@@ -31,11 +32,18 @@ exports.websocket = websocket;
  * @api publiC
  */
 
-function HTTPClient (port) {
-  this.port = port;
-  this.agent = new http.Agent({
+function HTTPClient (ports) {
+  this.ports = ports;
+  this.agents = [];
+  this.portNum = ports.length;
+  this.serialNum = 0;
+  var self = this;
+
+  this.ports.forEach(function(port) {
+    self.agents.push(new http.Agent({
       host: 'localhost'
     , port: port
+    }));
   });
 };
 
@@ -52,9 +60,9 @@ HTTPClient.prototype.request = function (path, opts, fn) {
   }
 
   opts = opts || {};
-  opts.agent = this.agent;
+  opts.agent = this.agents[this.serialNum % this.portNum];
   opts.host = 'localhost';
-  opts.port = this.port;
+  opts.port = this.ports[this.serialNum % this.portNum];
   opts.path = path.replace(/{protocol}/g, io.protocol);
 
   opts.headers = opts.headers || {};
@@ -76,6 +84,8 @@ HTTPClient.prototype.request = function (path, opts, fn) {
     });
   });
 
+  // round-robin mode 
+  this.serialNum ++;
   req.on('error', function (err) { });
 
   if (undefined !== opts.data)
@@ -93,26 +103,28 @@ HTTPClient.prototype.request = function (path, opts, fn) {
  */
 
 HTTPClient.prototype.end = function () {
-  // node <v0.5 compat
-  if (this.agent.sockets.forEach) {
-      this.agent.sockets.forEach(function (socket) {
+  for (var i = 0; i < this.agents.length; ++i) {
+    var agent = this.agents[i];
+    // node <v0.5 compat
+    if (agent.sockets.forEach) {
+      agent.sockets.forEach(function (socket) {
         if (socket.end) socket.end();
       });
       return;
-  }
-  // node >=v0.5 compat
-  var self = this;
-  Object.keys(this.agent.sockets).forEach(function (socket) {
-    for (var i = 0, l = self.agent.sockets[socket].length; i < l; ++i) {
-      if (self.agent.sockets[socket][i]._handle) {
-        if (self.agent.sockets[socket][i]._handle.socket) {
-          self.agent.sockets[socket][i]._handle.socket.end();
-        } else {
-          self.agent.sockets[socket][i]._handle.owner.end();
+    }
+    // node >=v0.5 compat
+    Object.keys(agent.sockets).forEach(function (socket) {
+      for (var i = 0, l = agent.sockets[socket].length; i < l; ++i) {
+        if (agent.sockets[socket][i]._handle) {
+          if (agent.sockets[socket][i]._handle.socket) {
+            agent.sockets[socket][i]._handle.socket.end();
+          } else {
+            agent.sockets[socket][i]._handle.owner.end();
+          }
         }
       }
-    }
-  });
+    });
+  }
 };
 
 /**
@@ -207,18 +219,23 @@ HTTPClient.prototype.handshake = function (opts, fn) {
  * @api private
  */
 
-function client(port) {
-  return new HTTPClient(port);
+function client (ports) {
+  return new HTTPClient(ports);
 };
 
 /**
- * Create a socket.io server.
+ * Create multi socket.io servers based on given ports.
  */
 
-function create(cl) {
-  var manager = io.listen(cl.port);
-  manager.set('client store expiration', 0);
-  return manager;
+function create (cl) {
+  var managers = [];
+  cl.ports.forEach(function(port) {
+    var manager = io.listen(port, {
+      store: new RedisStore(),
+      'client store expiration': 0});
+    managers.push(manager);
+  });
+  return managers;
 };
 
 /**
@@ -276,5 +293,5 @@ WSClient.prototype.packet = function (pack) {
  */
 
 function websocket (cl, sid, transport) {
-  return new WSClient(cl.port, sid, transport);
+  return new WSClient(cl.ports[cl.serialNum++ % cl.portNum], sid, transport);
 };

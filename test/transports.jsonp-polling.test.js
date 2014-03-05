@@ -10,11 +10,13 @@
  */
 
 var sio = require('../')
-  , should = require('./common')
+  , should = require('should')
   , qs = require('querystring')
-  , HTTPClient = should.HTTPClient
+  , HTTPClient = require('./common').HTTPClient
+  , create = require('./common').create
+  , util = require('util')
   , parser = sio.parser
-  , ports = 15500;
+  , ports = 15700;
 
 /**
  * HTTPClient for jsonp-polling transport.
@@ -28,7 +30,7 @@ function JSONPPolling (port) {
  * Inhertis from HTTPClient.
  */
 
-JSONPPolling.prototype.__proto__ = HTTPClient.prototype;
+util.inherits(JSONPPolling, HTTPClient);
 
 /**
  * Performs a json-p (cross domain) handshake

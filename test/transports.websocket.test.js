@@ -10,9 +10,12 @@
  */
 
 var sio = require('../')
-  , should = require('./common')
+  , should = require('should')
   , parser = sio.parser
-  , ports = 15800;
+  , client = require('./common').client
+  , create = require('./common').create 
+  , websocket = require('./common').websocket
+  , ports = 15900;
 
 /**
  * Tests.

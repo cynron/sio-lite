@@ -5,7 +5,7 @@
 
 var parser = require('../').parser
   , decode = parser.decode
-  , should = require('./common');
+  , should = require('should');
 
 /**
  * Test.

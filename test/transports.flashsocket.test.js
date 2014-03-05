@@ -12,11 +12,15 @@
 var sio = require('../')
   , net = require('net')
   , http = require('http')
-  , should = require('./common')
+  , should = require('should')
   , WebSocket = require('../support/node-websocket-client/lib/websocket').WebSocket
   , WSClient = require('./transports.websocket.test')
   , parser = sio.parser
-  , ports = 15600;
+  , client = require('./common').client
+  , create = require('./common').create
+  , websocket = require('./common').websocket
+  , util = require('util')
+  , ports = 15500;
 
 /**
  * FlashSocket client constructor.
@@ -39,7 +43,7 @@ function FlashSocket (port, sid) {
  * Inherits from WSClient.
  */
 
-FlashSocket.prototype.__proto__ = WebSocket.prototype;
+util.inherits(FlashSocket, WebSocket);
 
 /**
  * Creates a TCP connection to a port.

@@ -10,7 +10,9 @@
  */
 
 var sio = require('../')
-  , should = require('./common')
+  , should = require('should')
+  , create = require('./common').create
+  , client = require('./common').client
   , ports = 15400;
 
 /**
