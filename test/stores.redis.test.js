@@ -30,6 +30,7 @@ module.exports = {
 
   'test storing handshaken for a connection': function (done) {
     var store = new RedisStore();
+    manager['handshake expiration'] = 1;
     store.init(manager);
     store.onHandshaken('id-1', 'handshaken', function() {
       store.handshaken('id-1', function(data) {
@@ -46,6 +47,7 @@ module.exports = {
 
   'test storing connected state for a connection': function (done) {
     var store = new RedisStore();
+    manager['handshake expiration'] = 1;
     store.init(manager);
     var handshaken = {};
     handshaken.issued = Date.now();
