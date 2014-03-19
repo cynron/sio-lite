@@ -53,8 +53,7 @@ module.exports = {
         store.connected('id-1', function(data) {
           data.should.be.ok;
           store.handshaken('id-1', function(data) {
-            (!!data.issued).should.not.be.ok;
-            data.data.should.eql('test');
+            (!!data).should.not.be.ok;
             store.connected('id-2', function(data) {
               (!!data).should.not.be.ok;
               store.destroy();
