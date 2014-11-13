@@ -9,29 +9,10 @@
  * Test dependencies.
  */
 
-var sio = require('../')
-  , fs = require('fs')
-  , http = require('http')
-  , https = require('https')
-  , should = require('./common')
-  , client = require('./common').client
-  , create = require('./common').create 
-  , websocket = require('./common').websocket
-  , ports = 15000;
-
-/**
- * Test.
- */
-
 module.exports = {
 
   'test that protocol version is present': function (done) {
     sio.protocol.should.be.a.Number;
-    done();
-  },
-
-  'test that default transports are present': function (done) {
-    sio.Manager.defaultTransports.should.be.an.instanceof(Array);
     done();
   },
 
@@ -47,8 +28,7 @@ module.exports = {
     io.server.should.be.an.instanceof(http.Server);
 
     cl.get('/', function (res, data) {
-      res.statusCode.should.eql(200);
-      data.should.eql('Welcome to socket.io.');
+      res.statusCode.should.eql(400);
 
       cl.end();
       io.server.close();
@@ -64,9 +44,8 @@ module.exports = {
 
     server.listen(port);
 
-    cl.get('/socket.io', function (res, data) {
-      res.statusCode.should.eql(200);
-      data.should.eql('Welcome to socket.io.');
+    cl.get('/', function (res, data) {
+      res.statusCode.should.eql(400);
 
       cl.end();
       server.close();
@@ -114,7 +93,7 @@ module.exports = {
         , cl = client(80);
 
       cl.get('/socket.io', function (res) {
-        res.statusCode.should.eql(200);
+        res.statusCode.should.eql(400);
 
         cl.end();
         io.server.close();
