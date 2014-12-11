@@ -1,3 +1,9 @@
+sio-lite 0.0.4 / 2014-12-11
+===================
+
+  * fork from socket.io 0.9.16 and do refactoring.
+  * add redis support for sharing session status
+  * reduce unused feature
 
 0.9.16 / 2013-06-06
 ===================

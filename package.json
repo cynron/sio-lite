@@ -1,37 +1,7 @@
 {
   "name": "sio-lite",
-  "version": "0.0.3",
-  "description": "Real-time apps made cross-browser & easy with a WebSocket-like API",
-  "homepage": "http://socket.io",
-  "keywords": ["websocket", "socket", "realtime", "socket.io", "comet", "ajax"],
-  "author": "Guillermo Rauch <guillermo@learnboost.com>",
-
-  "contributors": [
-    {
-      "name": "Guillermo Rauch",
-      "email": "rauchg@gmail.com"
-    },
-
-    {
-      "name": "Arnout Kazemier",
-      "email": "info@3rd-eden.com"
-    },
-
-    {
-      "name": "Vladimir Dronnikov",
-      "email": "dronnikov@gmail.com"
-    },
-
-    {
-      "name": "Einar Otto Stangvik",
-      "email": "einaros@gmail.com"
-    }
-  ],
-
-  "repository": {
-    "type": "git" ,
-    "url": "https://github.com/LearnBoost/socket.io.git"
-  },
+  "version": "0.0.4",
+  "description": "This project is forked from socket.io 0.9.16",
 
   "dependencies": {
     "base64id": "0.1.0",
@@ -45,6 +15,7 @@
     "supertest": "0.8.2",
     "socket.io-client": "0.9.16"
   },
+
   "main": "index",
   "engines": { "node": ">= 0.4.0" },
   "scripts": {
