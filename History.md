@@ -1,7 +1,11 @@
-sio-lite 0.0.4 / 2014-12-17
+sio-lite 0.0.6 / 2014-12-17
 ===================
-* tidy the code
-* fix a mem leak
+  * fix typo 
+
+sio-lite 0.0.5 / 2014-12-17
+===================
+  * tidy the code
+  * fix a mem leak
 
 sio-lite 0.0.4 / 2014-12-11
 ===================
