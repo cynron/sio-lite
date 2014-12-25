@@ -1,3 +1,8 @@
+sio-lite 0.0.7 / 2014-12-25
+===================
+  * fix buffer length bug
+  * fix remove listener bug
+  
 sio-lite 0.0.6 / 2014-12-17
 ===================
   * fix typo 
