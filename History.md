@@ -1,3 +1,7 @@
+sio-lite 0.0.8 / 2017-06-05
+===================
+  * enable keepalive by default
+
 sio-lite 0.0.7 / 2014-12-25
 ===================
   * fix buffer length bug
