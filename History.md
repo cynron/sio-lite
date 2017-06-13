@@ -1,3 +1,7 @@
+sio-lite 0.0.9 / 2017-06-13
+===================
+  * just bind ipv4 any address
+
 sio-lite 0.0.8 / 2017-06-05
 ===================
   * enable keepalive by default
