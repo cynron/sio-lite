@@ -1,11 +1,9 @@
 {
   "name": "sio-lite",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "description": "This project is forked from socket.io 0.9.16",
 
   "dependencies": {
-    "base64id": "0.1.0",
-    "redis": "0.10.0",
     "ws": "0.4.32"
   },
 

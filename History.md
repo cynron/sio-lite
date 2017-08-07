@@ -1,3 +1,7 @@
+sio-lite 0.1.0 / 2017-08-07
+===================
+
+  * just support websocket now, don't support long polling at all
 sio-lite 0.0.9 / 2017-06-13
 ===================
   * just bind ipv4 any address
