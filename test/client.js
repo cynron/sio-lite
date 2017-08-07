@@ -23,5 +23,5 @@ socket.on('error', function() {
 });
 
 setInterval(function() {
-  socket.send('heell');
+  socket.emit('heell', 'aaa');
 }, 2000);

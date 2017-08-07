@@ -2,8 +2,7 @@ var server = require('../');
 
 var s = server.listen(12345);
 
-s.set('transports', ['xhr-polling']);
-s.sockets.on('connection', function(socket) {
+s.on('connection', function(socket) {
   socket.on('message', function() {
     console.log('message', arguments);
   });
@@ -23,6 +22,10 @@ s.sockets.on('connection', function(socket) {
   setInterval(function() {
     socket.send('wolfjdkf');
   }, 1000);
+
+  socket.on('heell', function() {
+    console.log('event heell', arguments);
+  });
 
 });
 
