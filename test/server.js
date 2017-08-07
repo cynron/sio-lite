@@ -1,4 +1,4 @@
-var server = require('./');
+var server = require('../');
 
 var s = server.listen(12345);
 
