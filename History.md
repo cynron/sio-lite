@@ -1,3 +1,7 @@
+sio-lite 0.1.2 / 2017-08-29
+===================
+  * fix disconnect readyState check
+
 sio-lite 0.1.1 / 2017-08-09
 ===================
   * minor fix
